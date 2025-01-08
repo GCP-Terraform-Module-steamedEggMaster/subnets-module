@@ -1,6 +1,9 @@
 package test
 
 import (
+	"io/ioutil"
+	"log"
+	"path/filepath"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
