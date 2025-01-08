@@ -8,7 +8,7 @@ import (
 )
 
 // 서브네트워크를 생성하고 정리 함수를 반환합니다.
-func CreateSubnetwork(t *testing.T, networkID string, projectID string) func() {
+func CreateSubnetwork(t *testing.T, networkID string, projectID string) (string, func()) {
 	subnetworkOptions := &terraform.Options{
 		TerraformDir: "../../", // 서브네트워크 모듈 경로
 
