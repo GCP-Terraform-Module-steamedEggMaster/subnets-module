@@ -3,11 +3,6 @@ variable "subnet_name" {
   type        = string
 }
 
-variable "subnet_ip_cidr_range" {
-  description = "The primary IP CIDR range of the subnetwork"
-  type        = string
-}
-
 variable "subnet_region" {
   description = "The region where the subnetwork will be created"
   type        = string
@@ -22,6 +17,11 @@ variable "private_ip_google_access" {
   description = "Whether to enable Google Private Access for the subnetwork"
   type        = bool
   default     = false
+}
+
+variable "subnet_ip_cidr_range" {
+  description = "The primary IP CIDR range of the subnetwork"
+  type        = string
 }
 
 variable "secondary_ip_ranges" {
