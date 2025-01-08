@@ -29,6 +29,9 @@ func TestTerraformModule(t *testing.T) {
 
 	stateFilePath := "../examples/with-vpc/terraform.tfstate"
 	stateFileContent, err := ioutil.ReadFile(filepath.Clean(stateFilePath))
+	if err != nil {
+		t.Fatalf("Failed to read Terraform state file: %v", err)
+	}
 	log.Printf("Terraform State File Content:\n%s", string(stateFileContent))
 
 	// VPC 출력값 확인
