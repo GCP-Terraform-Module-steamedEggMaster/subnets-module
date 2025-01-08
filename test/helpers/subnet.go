@@ -8,7 +8,7 @@ import (
 )
 
 // 서브네트워크를 생성하고 정리 함수를 반환합니다.
-func CreateSubnetwork(t *testing.T, networkID string, projectID string) (string, func()) {
+func CreateSubnetwork(t *testing.T, networkID string, projectID string) (string, *terraform.Options, func()) {
 	subnetName := "test-subnet"
 	subnetRegion := "asia-northeast3"
 
@@ -40,7 +40,7 @@ func CreateSubnetwork(t *testing.T, networkID string, projectID string) (string,
 
 	terraform.InitAndApply(t, subnetworkOptions) // Terraform Init 및 Apply 실행
 	
-	return expectedSubnetID, func() {			 // 정리 함수 반환
+	return expectedSubnetID, subnetworkOptions, func() {			 // 정리 함수 반환
 		terraform.Destroy(t, subnetworkOptions)
 	}
 }
