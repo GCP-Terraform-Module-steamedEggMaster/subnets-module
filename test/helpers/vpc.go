@@ -11,14 +11,10 @@ func CreateVPC(t *testing.T, projectID string) (string, func()) {
 	vpcOptions := &terraform.Options{
 		// Terraform 모듈 입력 변수 설정
 		Vars: map[string]interface{}{
+			"source":           "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/vpc-module.git?ref=v1.0.0",
 			"project_id":       projectID,
 			"vpc_network_name": "test-vpc",
 			"routing_mode":     "REGIONAL",
-		},
-
-		// 원격 모듈 소스 설정
-		EnvVars: map[string]string{
-			"TF_VAR_source": "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/vpc-module.git?ref=v1.0.0",
 		},
 	}
 
