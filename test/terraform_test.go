@@ -33,7 +33,8 @@ func TestTerraformModule(t *testing.T) {
 	} else {
 		log.Printf("Terraform State File Content:\n%s", string(stateFileContent)) // 상태 파일 내용 출력
 	}
-	// 5. state file을 확인하여 잘 넘어간 것만 확인하면 됨!
+	// 5. state file을 확인하여 잘 넘어간 것만 확인하거나
+	//    with-vpc에서 outputs.tf를 정의하면 됨
 
 	// VPC 출력값 확인
 	// networkID := terraform.Output(t, terraformOptions, "network_id")
