@@ -1,10 +1,10 @@
 package helpers
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/stretchr/testify/assert"
 )
 
 // 서브네트워크를 생성하고 정리 함수를 반환합니다.
