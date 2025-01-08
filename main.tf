@@ -13,8 +13,6 @@ resource "google_compute_subnetwork" "private" {
     }
   }
   
-  enable_flow_logs = var.enable_flow_logs                  # 흐름 로그 활성화 여부
-
   log_config {                                             # 흐름 로그 구성
     aggregation_interval = var.log_aggregation_interval
     flow_sampling        = var.log_flow_sampling

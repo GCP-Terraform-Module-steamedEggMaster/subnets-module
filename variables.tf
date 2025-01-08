@@ -33,12 +33,6 @@ variable "secondary_ip_ranges" {
   default = []
 }
 
-variable "enable_flow_logs" {
-  description = "Enable flow logs for the subnetwork"
-  type        = bool
-  default     = false
-}
-
 variable "log_aggregation_interval" {
   description = "The aggregation interval for the flow logs"
   type        = string
