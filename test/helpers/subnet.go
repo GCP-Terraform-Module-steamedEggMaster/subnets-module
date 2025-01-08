@@ -12,8 +12,8 @@ func CreateSubnetwork(t *testing.T, networkID string, projectID string) (string,
 	subnetworkOptions := &terraform.Options{
 		TerraformDir: "../../", // 서브네트워크 모듈 경로
 
-		subnetName := "test-subnet"
-		subnetRegion := "asia-northeast3"
+		subnetName := "test-subnet",
+		subnetRegion := "asia-northeast3",
 
 		// 서브네트워크 모듈 입력 변수 설정
 		Vars: map[string]interface{}{
