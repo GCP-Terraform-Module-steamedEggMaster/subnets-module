@@ -9,6 +9,6 @@ module "subnets" {
 
   subnet_name      = var.subnet_name
   subnet_region    = var.subnet_region
-  network_id   = module.vpc.network_id # vpc 모듈의 출력값 사용
+  network_id       = module.vpc.network_id # vpc 모듈의 출력값 사용
   subnet_ip_cidr_range = var.subnet_ip_cidr_range
 }
