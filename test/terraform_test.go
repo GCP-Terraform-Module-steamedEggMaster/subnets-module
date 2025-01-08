@@ -3,8 +3,8 @@ package test
 import (
 	"os"
 	"testing"
-	"./helpers" // 헬퍼 함수 파일 경로
-
+	
+	"github.com/test/subnets-module/test/helpers" // 헬퍼 함수 파일 경로
 	"github.com/stretchr/testify/assert"
 )
 
