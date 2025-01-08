@@ -24,13 +24,15 @@ func TestTerraformModule(t *testing.T) {
 	defer terraform.Destroy(t, terraformOptions) // 테스트 종료 후 리소스 정리
 	terraform.InitAndApply(t, terraformOptions)
 
+	stateFilePath := "../examples/with-vpc/terraform.tfstate"
+	stateFileContent, err := ioutil.ReadFile(filepath.Clean(stateFilePath))
+	log.Printf("Terraform State File Content:\n%s", string(stateFileContent))
+
 	// VPC 출력값 확인
 	networkID := terraform.Output(t, terraformOptions, "network_id")
-	t.Logf("Debug: VPC Network ID = %s", networkID) // 상태 출력값 디버깅
 	assert.NotEmpty(t, networkID, "VPC Network ID should not be empty")
 
 	// Subnet 출력값 확인
 	subnetworkID := terraform.Output(t, terraformOptions, "subnetwork_id")
-	t.Logf("Debug: Subnet ID = %s", subnetworkID) // 상태 출력값 디버깅
 	assert.NotEmpty(t, subnetworkID, "Subnet ID should not be empty")
 }
