@@ -15,11 +15,6 @@ variable "subnet_region" {
   type        = string
 }
 
-variable "network_id" {
-  description = "The ID of the VPC network where this subnetwork will be created"
-  type        = string
-}
-
 variable "subnet_ip_cidr_range" {
   description = "The CIDR range of the subnet"
   type        = string
