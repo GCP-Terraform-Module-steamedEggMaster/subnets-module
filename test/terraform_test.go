@@ -12,7 +12,7 @@ func TestTerraformModule(t *testing.T) {
 		TerraformDir: "../examples/with-vpc", // 샘플 구성 파일 디렉터리
 
 		Vars: map[string]interface{}{
-			"vpc_network_name":      "test-vpc"
+			"vpc_network_name":      "test-vpc",
 			"subnet_name":           "test-subnet",
 			"subnet_region":         "asia-northeast3",
 			"subnet_ip_cidr_range":  "10.0.0.0/16",
