@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 	
-	"github.com/test/subnets-module/test/helpers" // 헬퍼 함수 파일 경로
+	"github.com/test/subnets-module/helpers" // 헬퍼 함수 파일 경로
 	"github.com/stretchr/testify/assert"
 )
 
