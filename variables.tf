@@ -1,4 +1,3 @@
-# VPC 서브네트워크 변수 정의
 variable "subnet_name" {
   description = "The name of the subnetwork"
   type        = string

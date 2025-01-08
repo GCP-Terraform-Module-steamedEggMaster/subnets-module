@@ -3,7 +3,7 @@ package test
 import (
 	"os"
 	"testing"
-	"test/helpers" // 헬퍼 함수 파일 경로
+	"./helpers" // 헬퍼 함수 파일 경로
 
 	"github.com/stretchr/testify/assert"
 )
