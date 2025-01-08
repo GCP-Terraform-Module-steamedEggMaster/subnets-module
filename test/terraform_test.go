@@ -5,7 +5,6 @@ import (
 	"testing"
 	
 	"github.com/test/subnets-module/helpers" // 헬퍼 함수 파일 경로
-	"github.com/stretchr/testify/assert"
 )
 
 func TestTerraformModule(t *testing.T) {
@@ -17,9 +16,9 @@ func TestTerraformModule(t *testing.T) {
 	defer vpcCleanup()
 
 	// 서브네트워크 생성 및 정리 함수 설정
-	expectedSubnetID, subnetworkCleanup := helpers.CreateSubnetwork(t, networkID, projectID)
+	expectedSubnetID, subnetworkOptions, subnetworkCleanup := helpers.CreateSubnetwork(t, networkID, projectID)
 	defer subnetworkCleanup()
 
 	// 서브네트워크 출력값 검증
-	helpers.VerifySubnetworkOutputs(t, subnetworkCleanup, expectedSubnetID)
+	helpers.VerifySubnetworkOutputs(t, subnetworkOptions, expectedSubnetID)
 }
