@@ -68,8 +68,6 @@ GCP Terraform subnets module Repo
 | `role`                 | string | ❌        | `null` | 서브네트워크의 역할 (ACTIVE/BACKUP) |
 | `region`               | string | ✅        | 없음   | 서브네트워크가 생성될 GCP 리전      |
 
-<br> 
-
 ##### IPv6 관련 설정
 | 변수명                  | 타입   | 필수 여부 | 기본값     | 설명                                  |
 |-------------------------|--------|-----------|------------|---------------------------------------|
@@ -77,38 +75,26 @@ GCP Terraform subnets module Repo
 | `ipv6_access_type`     | string | ❌        | `null`     | 서브네트워크의 IPv6 접근 유형         |
 | `external_ipv6_prefix` | string | ❌        | `null`     | 서브네트워크의 외부 IPv6 주소 범위    |
 
-
-<br>
-
 ##### Google API 접근 설정
 | 변수명                    | 타입   | 필수 여부 | 기본값 | 설명                                  |
 |---------------------------|--------|-----------|--------|---------------------------------------|
 | `private_ip_google_access` | bool  | ❌        | `false`| Private Google Access 활성화 여부     |
 | `private_ipv6_google_access` | string | ❌      | `null` | Private IPv6 Google Access 유형       |
 
-<br>
-
 ##### Secondary IP Range 설정
 | 변수명                   | 타입   | 필수 여부 | 기본값 | 설명                                |
 |--------------------------|--------|-----------|--------|-------------------------------------|
 | `secondary_ip_ranges`   | list   | ❌        | `[]`   | Secondary IP CIDR 범위 구성 목록     |
-
-
-<br>
 
 ##### 로그 설정
 | 변수명          | 타입   | 필수 여부 | 기본값 | 설명                           |
 |-----------------|--------|-----------|--------|--------------------------------|
 | `log_config`   | object | ❌        | `null` | VPC 플로우 로깅 구성           |
 
-<br>
-
 #### 기타 설정
 | 변수명                          | 타입   | 필수 여부 | 기본값 | 설명                                    |
 |---------------------------------|--------|-----------|--------|-----------------------------------------|
 | `send_secondary_ip_range_if_empty` | bool | ❌        | `false`| Secondary IP Range 제거 시 동작          |
-
-<br>
 
 #### Timeout 설정
 | 변수명            | 타입   | 필수 여부 | 기본값  | 설명                         |
