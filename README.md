@@ -6,9 +6,23 @@ GCP Terraform subnets module Repo
 
 <br>
 
+## 📑 **목차**
+1. [모듈 특징](#모듈-특징)
+2. [사용 방법](#사용-방법)
+    1. [사전 준비](#1-사전-준비)
+    2. [입력 변수](#2-입력-변수)
+    3. [모듈 호출 예시](#3-모듈-호출-예시)
+    4. [출력값 (Outputs)](#4-출력값-outputs)
+    5. [지원 버전](#5-지원-버전)
+    6. [모듈 개발 및 관리](#6-모듈-개발-및-관리)
+3. [테스트](#terratest를-이용한-테스트)
+4. [주요 버전 관리](#주요-버전-관리)
+5. [기여](#기여-contributing)
+6. [라이선스](#라이선스-license)
+
 ---
 
-## 📋 **모듈 특징**
+## 모듈 특징
 
 - 사용자 정의 서브네트워크 생성.
 - VPC 네트워크와 연결된 서브네트워크 설정 지원.
@@ -21,7 +35,7 @@ GCP Terraform subnets module Repo
 
 ---
 
-## 🔧 사용 방법
+## 사용 방법
 
 ### 1. 사전 준비
 
@@ -34,17 +48,74 @@ GCP Terraform subnets module Repo
 
 ### 2. 입력 변수
 
-| 변수명                        | 타입   | 필수 여부 | 기본값                   | 설명                                   |
-|-------------------------------|--------|-----------|--------------------------|----------------------------------------|
-| `subnet_name`                 | string | ✅        | 없음                     | 서브네트워크의 이름                     |
-| `subnet_region`               | string | ✅        | 없음                     | 서브네트워크가 생성될 지역 (예: `asia-northeast3`) |
-| `network_id`                  | string | ✅        | 없음                     | VPC 네트워크 ID                        |
-| `private_ip_google_access`    | bool   | ❌        | `false`                  | Google Private Access 활성화 여부      |
-| `subnet_ip_cidr_range`        | string | ✅        | 없음                     | 서브네트워크의 기본 IP CIDR 범위       |
-| `secondary_ip_ranges`         | list   | ❌        | `[]`                     | Secondary IP CIDR 범위 구성 리스트      |
-| `log_aggregation_interval`    | string | ❌        | `INTERVAL_5_SEC`         | 흐름 로그의 집계 간격 설정             |
-| `log_flow_sampling`           | number | ❌        | `0.5`                    | 흐름 로그의 샘플링 비율                |
-| `log_metadata`                | string | ❌        | `INCLUDE_ALL_METADATA`   | 흐름 로그에 포함할 메타데이터 설정      |
+#### 필수 옵션
+
+| 변수명    | 타입   | 필수 여부 | 기본값 | 설명                   |
+|-----------|--------|-----------|--------|------------------------|
+| `name`   | string | ✅        | 없음   | 서브네트워크 이름       |
+| `network`| string | ✅        | 없음   | 서브네트워크가 속한 VPC |
+
+<br>
+
+#### 선택적 옵션
+##### 기본 설정
+| 변수명                  | 타입   | 필수 여부 | 기본값 | 설명                                |
+|-------------------------|--------|-----------|--------|-------------------------------------|
+| `description`          | string | ❌        | `null` | 서브네트워크 설명                   |
+| `ip_cidr_range`        | string | ✅        | 없음   | 서브네트워크의 IP CIDR 범위         |
+| `reserved_internal_range` | string | ❌      | `null` | 예약된 내부 범위 ID                |
+| `purpose`              | string | ❌        | `PRIVATE` | 서브네트워크의 목적 (PRIVATE 등)   |
+| `role`                 | string | ❌        | `null` | 서브네트워크의 역할 (ACTIVE/BACKUP) |
+| `region`               | string | ✅        | 없음   | 서브네트워크가 생성될 GCP 리전      |
+
+<br> 
+
+##### IPv6 관련 설정
+| 변수명                  | 타입   | 필수 여부 | 기본값     | 설명                                  |
+|-------------------------|--------|-----------|------------|---------------------------------------|
+| `stack_type`           | string | ❌        | `IPV4_ONLY`| 서브네트워크 스택 유형 (IPV4_ONLY 등) |
+| `ipv6_access_type`     | string | ❌        | `null`     | 서브네트워크의 IPv6 접근 유형         |
+| `external_ipv6_prefix` | string | ❌        | `null`     | 서브네트워크의 외부 IPv6 주소 범위    |
+
+
+<br>
+
+##### Google API 접근 설정
+| 변수명                    | 타입   | 필수 여부 | 기본값 | 설명                                  |
+|---------------------------|--------|-----------|--------|---------------------------------------|
+| `private_ip_google_access` | bool  | ❌        | `false`| Private Google Access 활성화 여부     |
+| `private_ipv6_google_access` | string | ❌      | `null` | Private IPv6 Google Access 유형       |
+
+<br>
+
+##### Secondary IP Range 설정
+| 변수명                   | 타입   | 필수 여부 | 기본값 | 설명                                |
+|--------------------------|--------|-----------|--------|-------------------------------------|
+| `secondary_ip_ranges`   | list   | ❌        | `[]`   | Secondary IP CIDR 범위 구성 목록     |
+
+
+<br>
+
+##### 로그 설정
+| 변수명          | 타입   | 필수 여부 | 기본값 | 설명                           |
+|-----------------|--------|-----------|--------|--------------------------------|
+| `log_config`   | object | ❌        | `null` | VPC 플로우 로깅 구성           |
+
+<br>
+
+#### 기타 설정
+| 변수명                          | 타입   | 필수 여부 | 기본값 | 설명                                    |
+|---------------------------------|--------|-----------|--------|-----------------------------------------|
+| `send_secondary_ip_range_if_empty` | bool | ❌        | `false`| Secondary IP Range 제거 시 동작          |
+
+<br>
+
+#### Timeout 설정
+| 변수명            | 타입   | 필수 여부 | 기본값  | 설명                         |
+|-------------------|--------|-----------|---------|------------------------------|
+| `timeout_create` | string | ❌        | `"20m"`| 리소스 생성 제한 시간         |
+| `timeout_update` | string | ❌        | `"20m"`| 리소스 업데이트 제한 시간     |
+| `timeout_delete` | string | ❌        | `"20m"`| 리소스 삭제 제한 시간         |
 
 <br>
 
@@ -54,26 +125,28 @@ GCP Terraform subnets module Repo
 module "subnetwork" {
   source = "git::https://github.com/GCP-Terraform-Module-steamedEggMaster/subnets-module.git?ref=v1.0.0"
 
-  subnet_name              = "custom-subnet"
-  subnet_region            = "asia-northeast3"
-  network_id               = "projects/my-project-id/global/networks/my-vpc"
+  name                    = "custom-subnet"
+  region                  = "asia-northeast3"
+  network                 = "projects/my-project/global/networks/my-vpc"
+  ip_cidr_range           = "10.0.0.0/16"
   private_ip_google_access = true
-  subnet_ip_cidr_range     = "10.0.0.0/16"
 
   secondary_ip_ranges = [
     {
-      range_name    = "k8s-pod-range",
-      ip_cidr_range = "10.1.0.0/16"
+      range_name    = "secondary-1"
+      ip_cidr_range = "10.1.0.0/24"
     },
     {
-      range_name    = "k8s-service-range",
-      ip_cidr_range = "10.2.0.0/16"
+      range_name    = "secondary-2"
+      ip_cidr_range = "10.2.0.0/24"
     }
   ]
 
-  log_aggregation_interval = "INTERVAL_10_MIN"
-  log_flow_sampling        = 0.7
-  log_metadata             = "INCLUDE_ALL_METADATA"
+  log_config = {
+    aggregation_interval = "INTERVAL_10_MIN"
+    flow_sampling        = 0.7
+    metadata             = "INCLUDE_ALL_METADATA"
+  }
 }
 ```
 
@@ -81,13 +154,20 @@ module "subnetwork" {
 
 ### 4. 출력값 (Outputs)
 
-| 출력명               | 설명                                      |
-|----------------------|----------------------------------------|
-| `subnetwork_id`         | 생성된 서브네트워크의 ID                  |
-| `subnetwork_name`       | 생성된 서브네트워크의 이름                 |
-| `subnetwork_self_link`  | 생성된 서브네트워크의 self-link           |
-| `subnetwork_region`     | 생성된 서브네트워크의 지역                 |
-| `subnetwork_network`    | 생성된 서브네트워크가 연결된 VPC 네트워크 ID  |
+| 출력명                     | 설명                                          |
+|----------------------------|-----------------------------------------------|
+| `id`                       | 서브네트워크의 고유 ID                        |
+| `name`                     | 서브네트워크의 이름                           |
+| `self_link`                | 서브네트워크의 URI                           |
+| `gateway_address`          | 서브네트워크의 기본 게이트웨이 주소           |
+| `region`                   | 서브네트워크가 생성된 리전                    |
+| `ipv6_cidr_range`          | 서브네트워크의 내부 IPv6 범위                 |
+| `network`                  | 서브네트워크가 속한 VPC 네트워크의 이름       |
+| `purpose`                  | 서브네트워크의 목적 (예: PRIVATE 등)          |
+| `stack_type`               | 서브네트워크의 스택 유형 (예: IPV4_ONLY 등)   |
+| `private_ip_google_access` | Google API 및 서비스에 대한 Private IP 접근 활성화 여부 |
+| `private_ipv6_google_access` | 서브네트워크의 Private IPv6 Google Access 유형 |
+
 
 <br>
 
