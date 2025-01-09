@@ -22,6 +22,7 @@ output "subnet_details" {
     self_link                  = module.subnet.self_link
     gateway_address            = module.subnet.gateway_address
     region                     = module.subnet.region
+    network                    = module.subnet.network
     ipv6_cidr_range            = module.subnet.ipv6_cidr_range
     private_ip_google_access   = module.subnet.private_ip_google_access
     private_ipv6_google_access = module.subnet.private_ipv6_google_access
