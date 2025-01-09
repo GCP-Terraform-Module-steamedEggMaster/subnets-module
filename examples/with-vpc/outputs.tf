@@ -7,7 +7,7 @@ output "vpc_details" {
     routing_mode             = module.vpc.routing_mode
     gateway_ipv4             = module.vpc.gateway_ipv4
     project                  = module.vpc.project
-    auto_create_subvpcs      = module.vpc.auto_create_subvpcs
+    auto_create_subnetworks  = module.vpc.auto_create_subnetworks
     mtu                      = module.vpc.mtu
     enable_ula_internal_ipv6 = module.vpc.enable_ula_internal_ipv6
   }
