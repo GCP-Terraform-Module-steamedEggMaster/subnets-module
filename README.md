@@ -144,15 +144,20 @@ module "subnetwork" {
 |----------------------------|-----------------------------------------------|
 | `id`                       | 서브네트워크의 고유 ID                        |
 | `name`                     | 서브네트워크의 이름                           |
-| `self_link`                | 서브네트워크의 URI                           |
+| `self_link`                | 서브네트워크의 고유 URI                      |
 | `gateway_address`          | 서브네트워크의 기본 게이트웨이 주소           |
 | `region`                   | 서브네트워크가 생성된 리전                    |
+| `ip_cidr_range`            | 서브네트워크의 기본 IP CIDR 범위             |
 | `ipv6_cidr_range`          | 서브네트워크의 내부 IPv6 범위                 |
-| `network`                  | 서브네트워크가 속한 VPC 네트워크의 이름       |
-| `purpose`                  | 서브네트워크의 목적 (예: PRIVATE 등)          |
-| `stack_type`               | 서브네트워크의 스택 유형 (예: IPV4_ONLY 등)   |
+| `network`                  | 서브네트워크가 속한 VPC 네트워크의 ID         |
 | `private_ip_google_access` | Google API 및 서비스에 대한 Private IP 접근 활성화 여부 |
 | `private_ipv6_google_access` | 서브네트워크의 Private IPv6 Google Access 유형 |
+| `stack_type`               | 서브네트워크의 스택 유형 (예: IPV4_ONLY 또는 IPV4_IPV6) |
+| `ipv6_access_type`         | 서브네트워크의 IPv6 접근 유형 (예: INTERNAL 또는 EXTERNAL) |
+| `secondary_ip_ranges`      | 서브네트워크에 설정된 Secondary IP 범위 목록  |
+| `log_config`               | 서브네트워크의 VPC 플로우 로깅 설정           |
+| `creation_timestamp`       | 서브네트워크가 생성된 시간 (RFC3339 형식)     |
+
 
 
 <br>
