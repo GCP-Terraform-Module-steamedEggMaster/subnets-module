@@ -71,11 +71,11 @@ output "secondary_ip_ranges" {
 output "log_config" {
   description = "서브네트워크의 VPC 플로우 로깅 설정"
   value = {
-    aggregation_interval = google_compute_subnetwork.subnetwork.log_config[0].aggregation_interval
-    flow_sampling        = google_compute_subnetwork.subnetwork.log_config[0].flow_sampling
-    metadata             = google_compute_subnetwork.subnetwork.log_config[0].metadata
-    metadata_fields      = google_compute_subnetwork.subnetwork.log_config[0].metadata_fields
-    filter_expr          = google_compute_subnetwork.subnetwork.log_config[0].filter_expr
+    aggregation_interval = try(google_compute_subnetwork.subnetwork.log_config[0].aggregation_interval, null)
+    flow_sampling        = try(google_compute_subnetwork.subnetwork.log_config[0].flow_sampling, null)
+    metadata             = try(google_compute_subnetwork.subnetwork.log_config[0].metadata, null)
+    metadata_fields      = try(google_compute_subnetwork.subnetwork.log_config[0].metadata_fields, [])
+    filter_expr          = try(google_compute_subnetwork.subnetwork.log_config[0].filter_expr, null)
   }
 }
 
