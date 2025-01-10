@@ -23,8 +23,14 @@ output "subnet_details" {
     gateway_address            = module.subnet.gateway_address
     region                     = module.subnet.region
     network                    = module.subnet.network
+    ip_cidr_range              = module.subnet.ip_cidr_range
     ipv6_cidr_range            = module.subnet.ipv6_cidr_range
     private_ip_google_access   = module.subnet.private_ip_google_access
     private_ipv6_google_access = module.subnet.private_ipv6_google_access
+    stack_type                 = module.subnet.stack_type
+    ipv6_access_type           = module.subnet.ipv6_access_type
+    secondary_ip_ranges        = module.subnet.secondary_ip_ranges
+    log_config                 = module.subnet.log_config
+    creation_timestamp         = module.subnet.creation_timestamp
   }
 }

@@ -9,7 +9,7 @@ output "name" {
 }
 
 output "self_link" {
-  description = "서브네트워크의 URI"
+  description = "서브네트워크의 고유 URI"
   value       = google_compute_subnetwork.subnetwork.self_link
 }
 
@@ -23,32 +23,63 @@ output "region" {
   value       = google_compute_subnetwork.subnetwork.region
 }
 
-output "ipv6_cidr_range" {
-  description = "서브네트워크의 내부 IPv6 범위"
-  value       = google_compute_subnetwork.subnetwork.ipv6_cidr_range
-}
-
 output "network" {
-  description = "서브네트워크가 속한 VPC 네트워크의 이름"
+  description = "서브네트워크가 속한 VPC 네트워크의 ID"
   value       = google_compute_subnetwork.subnetwork.network
 }
 
-output "purpose" {
-  description = "서브네트워크의 목적 (예: PRIVATE, REGIONAL_MANAGED_PROXY 등)"
-  value       = google_compute_subnetwork.subnetwork.purpose
+output "ip_cidr_range" {
+  description = "서브네트워크의 기본 IP CIDR 범위"
+  value       = google_compute_subnetwork.subnetwork.ip_cidr_range
 }
 
-output "stack_type" {
-  description = "서브네트워크의 스택 유형 (예: IPV4_ONLY, IPV4_IPV6)"
-  value       = google_compute_subnetwork.subnetwork.stack_type
+output "ipv6_cidr_range" {
+  description = "서브네트워크의 내부 IPv6 CIDR 범위 (활성화된 경우)"
+  value       = google_compute_subnetwork.subnetwork.ipv6_cidr_range
 }
 
 output "private_ip_google_access" {
-  description = "Google API 및 서비스에 대한 Private IP 접근 활성화 여부"
+  description = "서브네트워크에서 Private Google Access 활성화 여부"
   value       = google_compute_subnetwork.subnetwork.private_ip_google_access
 }
 
 output "private_ipv6_google_access" {
   description = "서브네트워크의 Private IPv6 Google Access 유형"
   value       = google_compute_subnetwork.subnetwork.private_ipv6_google_access
+}
+
+output "stack_type" {
+  description = "서브네트워크의 스택 유형 (IPV4_ONLY 또는 IPV4_IPV6)"
+  value       = google_compute_subnetwork.subnetwork.stack_type
+}
+
+output "ipv6_access_type" {
+  description = "서브네트워크의 IPv6 접근 유형 (EXTERNAL 또는 INTERNAL)"
+  value       = google_compute_subnetwork.subnetwork.ipv6_access_type
+}
+
+output "secondary_ip_ranges" {
+  description = "서브네트워크에 설정된 Secondary IP 범위 목록"
+  value = [
+    for range in google_compute_subnetwork.subnetwork.secondary_ip_range : {
+      range_name    = range.range_name
+      ip_cidr_range = range.ip_cidr_range
+    }
+  ]
+}
+
+output "log_config" {
+  description = "서브네트워크의 VPC 플로우 로깅 설정"
+  value = {
+    aggregation_interval = google_compute_subnetwork.subnetwork.log_config[0].aggregation_interval
+    flow_sampling        = google_compute_subnetwork.subnetwork.log_config[0].flow_sampling
+    metadata             = google_compute_subnetwork.subnetwork.log_config[0].metadata
+    metadata_fields      = google_compute_subnetwork.subnetwork.log_config[0].metadata_fields
+    filter_expr          = google_compute_subnetwork.subnetwork.log_config[0].filter_expr
+  }
+}
+
+output "creation_timestamp" {
+  description = "서브네트워크가 생성된 시간 (RFC3339 형식)"
+  value       = google_compute_subnetwork.subnetwork.creation_timestamp
 }
