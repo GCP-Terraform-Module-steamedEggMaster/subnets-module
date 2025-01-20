@@ -85,7 +85,7 @@ variable "secondary_ip_ranges" {
   type = list(object({
     range_name              = string
     ip_cidr_range           = string
-    reserved_internal_range = string
+    reserved_internal_range = optional(string, null)
   }))
   default = []
 }
@@ -94,11 +94,11 @@ variable "secondary_ip_ranges" {
 variable "log_config" {
   description = "VPC 플로우 로깅 구성"
   type = object({
-    aggregation_interval = string
-    flow_sampling        = number
-    metadata             = string
-    metadata_fields      = list(string)
-    filter_expr          = string
+    aggregation_interval = optional(string, null)  # 기본값 null
+    flow_sampling        = optional(number, null)  # 기본값 null
+    metadata             = optional(string, null)  # 기본값 null
+    metadata_fields      = optional(list(string), [])  # 기본값 빈 리스트
+    filter_expr          = optional(string, null)  # 기본값 null
   })
   default = null
 }
